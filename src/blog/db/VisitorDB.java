@@ -25,7 +25,7 @@ public class VisitorDB {
 		String remoteHost = request.getRemoteHost();
 		String time = DateUtils.getFormatDate(new Date());
 
-		String sql = "insert into t_visitor values(null,?,?,?,?)";
+		String sql = "insert into blog_visitor values(null,?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, remoteAddr);
@@ -47,7 +47,7 @@ public class VisitorDB {
 	public static int totalVisit() {
 		Connection conn = C3P0Connection.getInstance().getConnection();
 		int result = 0;
-		String sql = "select count(id) from t_visitor";
+		String sql = "select count(id) from blog_visitor";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -69,7 +69,7 @@ public class VisitorDB {
 	public static int totalMember() {
 		Connection conn = C3P0Connection.getInstance().getConnection();
 		int result = 0;
-		String sql = "SELECT COUNT(DISTINCT(ip)) FROM t_visitor";
+		String sql = "SELECT COUNT(DISTINCT(ip)) FROM blog_visitor";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

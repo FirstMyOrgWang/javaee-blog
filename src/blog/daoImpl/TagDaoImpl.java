@@ -45,7 +45,7 @@ public class TagDaoImpl implements TagDao {
 	@Override
 	public boolean addTag(int id, String tag) {
 
-		String sql = "insert into t_tag values(?,?)";
+		String sql = "insert into blog_tag values(?,?)";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -68,7 +68,7 @@ public class TagDaoImpl implements TagDao {
 	@Override
 	public boolean deleteTag(int id, String tag) {
 
-		String sql = "delete from t_tag where id=? or tag=?";
+		String sql = "delete from blog_tag where id=? or tag=?";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -91,7 +91,7 @@ public class TagDaoImpl implements TagDao {
 	@Override
 	public List getAllTag() {
 
-		String sql = "SELECT  distinct(tag)  FROM t_tag";
+		String sql = "SELECT  distinct(tag)  FROM blog_tag";
 		List<Tag> list = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -120,7 +120,7 @@ public class TagDaoImpl implements TagDao {
 	@Override
 	public boolean updateTag(String old_tag, String new_tag) {
 
-		String sql = "update t_tag set tag=? where tag=?";
+		String sql = "update blog_tag set tag=? where tag=?";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -143,7 +143,7 @@ public class TagDaoImpl implements TagDao {
 	@Override
 	public List getTagByColumn(String column, String value) {
 
-		String sql = "select * from t_tag where " + column + "=?";
+		String sql = "select * from blog_tag where " + column + "=?";
 		List list = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);

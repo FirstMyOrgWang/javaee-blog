@@ -49,7 +49,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public void addVisit(int article_id) {
 
-		String sql = "update t_article set visit = visit+1 where id = " + article_id;
+		String sql = "update blog_article set visit = visit+1 where id = " + article_id;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.executeUpdate();
@@ -69,9 +69,9 @@ public class ArticleDaoImpl implements ArticleDao {
 		Article article = null;
 		String sql = null;
 		if (less_or_more == this.LESS) {
-			sql = " SELECT  * FROM t_article WHERE TIME< '" + time + "'  ORDER BY TIME DESC ";
+			sql = " SELECT  * FROM blog_article WHERE TIME< '" + time + "'  ORDER BY TIME DESC ";
 		} else if (less_or_more == this.MORE) {
-			sql = " SELECT  * FROM t_article WHERE TIME > '" + time + "'  ORDER BY TIME ";
+			sql = " SELECT  * FROM blog_article WHERE TIME > '" + time + "'  ORDER BY TIME ";
 		}
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -96,7 +96,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public Map getColumAndCount(String search_column) {
 
-		String sql = " select " + search_column + " ,count(" + search_column + ") as counts  from t_article  group by "
+		String sql = " select " + search_column + " ,count(" + search_column + ") as counts  from blog_article  group by "
 				+ search_column;
 		Map map = null;
 		try {
@@ -122,7 +122,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public List getAllSort() {
 
-		String sql = " select distinct(sort) from t_article order by sort";
+		String sql = " select distinct(sort) from blog_article order by sort";
 		List list = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -147,7 +147,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public Article addArticle(Article a) {
 
-		String sql = "insert into t_article values(null,?,?,?,?,?,?,?,?)";
+		String sql = "insert into blog_article values(null,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 		int result = 0;
 		try {
@@ -177,7 +177,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	 */
 	private boolean addArticle_delet(Article a) {
 
-		String sql = "insert into t_article_delet values(null,?,?,?,?,?,?,?,?)";
+		String sql = "insert into blog_article_delet values(null,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 		int result = 0;
 		try {
@@ -206,7 +206,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	 */
 	private Article getLastArticle() {
 
-		String sql = "SELECT * FROM t_article ORDER BY TIME DESC LIMIT 1";
+		String sql = "SELECT * FROM blog_article ORDER BY TIME DESC LIMIT 1";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -233,7 +233,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public boolean deleteArticle(String id) {
 
-		String sql = "delete from t_article where id=?";
+		String sql = "delete from blog_article where id=?";
 		PreparedStatement ps;
 		int result = 0;
 		try {
@@ -258,7 +258,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	public List getAllArticle() {
 		List<Article> list = new ArrayList();
 
-		String sql = "select * from t_article";
+		String sql = "select * from blog_article";
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -290,7 +290,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	public List getVisitRank() {
 		List<Article> list = new ArrayList();
 
-		String sql = "SELECT * FROM t_article ORDER BY visit DESC";
+		String sql = "SELECT * FROM blog_article ORDER BY visit DESC";
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -320,7 +320,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	public List<Article> getArticleByColumn(String column, String value) {
 		List<Article> list = null;
 		Article at = null;
-		String sql = "select * from t_article where " + column + " = ?";
+		String sql = "select * from blog_article where " + column + " = ?";
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -352,9 +352,9 @@ public class ArticleDaoImpl implements ArticleDao {
 
 		String sql;
 		if (search_key.equals(SEARCH_ARTICLE)) {
-			sql = "SELECT COUNT(id) FROM t_article";
+			sql = "SELECT COUNT(id) FROM blog_article";
 		} else {// SEARCH_SORT
-			sql = "SELECT COUNT(DISTINCT(sort)) FROM t_article";
+			sql = "SELECT COUNT(DISTINCT(sort)) FROM blog_article";
 		}
 		int result = 0;
 		try {
@@ -380,7 +380,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public int star_article(int id) {
 
-		String sql = "update t_article set star=star+1 where id=" + id;
+		String sql = "update blog_article set star=star+1 where id=" + id;
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -389,7 +389,7 @@ public class ArticleDaoImpl implements ArticleDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		sql = "select star from t_article where id=" + id;
+		sql = "select star from blog_article where id=" + id;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -410,7 +410,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public boolean updateSort(String old_sort, String new_sort) {
 
-		String sql = "UPDATE t_article SET sort=? WHERE sort=?";
+		String sql = "UPDATE blog_article SET sort=? WHERE sort=?";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -431,8 +431,8 @@ public class ArticleDaoImpl implements ArticleDao {
 	 */
 	@Override
 	public boolean delelteSort(String sort) {
-		// 找到这个分类下的文章 移动到t_article_delet
-		String sql = "SELECT * FROM t_article where sort = ?";
+		// 找到这个分类下的文章 移动到blog_article_delet
+		String sql = "SELECT * FROM blog_article where sort = ?";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -453,7 +453,7 @@ public class ArticleDaoImpl implements ArticleDao {
 				}
 			}
 
-			sql = "delete from t_article where sort =?";
+			sql = "delete from blog_article where sort =?";
 			PreparedStatement ps2 = conn.prepareStatement(sql);
 			ps2.setString(1, sort);
 			result = ps2.executeUpdate();

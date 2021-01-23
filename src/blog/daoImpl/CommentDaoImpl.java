@@ -43,7 +43,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public boolean deleteComment(int comment_id) {
 
-		String sql = "DELETE FROM t_comment WHERE id=" + comment_id;
+		String sql = "DELETE FROM blog_comment WHERE id=" + comment_id;
 		int result = 0;
 		try {
 			// 文章-1评论
@@ -66,7 +66,7 @@ public class CommentDaoImpl implements CommentDao {
 	 */
 	private void article_sub_comemnt(Connection conn, int comment_id) {
 
-		String sql = "SELECT  article_id FROM t_comment WHERE id =" + comment_id;
+		String sql = "SELECT  article_id FROM blog_comment WHERE id =" + comment_id;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -91,7 +91,7 @@ public class CommentDaoImpl implements CommentDao {
 	public boolean addComment(Comment comment) {
 
 		Connection conn = C3P0Connection.getInstance().getConnection();
-		String sql = "INSERT  INTO t_comment VALUES(null,?,?,?,?,?,?)";
+		String sql = "INSERT  INTO blog_comment VALUES(null,?,?,?,?,?,?)";
 		int result = 0;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -124,7 +124,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public List getComment(int article_id) {
 
-		String sql = "SELECT * FROM t_comment WHERE article_id=? ORDER BY TIME";
+		String sql = "SELECT * FROM blog_comment WHERE article_id=? ORDER BY TIME";
 		List list = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -164,9 +164,9 @@ public class CommentDaoImpl implements CommentDao {
 		int result = -1;
 
 		if (star_or_diss == Comment.STAR) {
-			sql = "update t_comment set star=star+1 where id=" + id;
+			sql = "update blog_comment set star=star+1 where id=" + id;
 		} else if (star_or_diss == Comment.DISS) {
-			sql = "update t_comment set diss=diss+1 where id=" + id;
+			sql = "update blog_comment set diss=diss+1 where id=" + id;
 		} else {
 			return -1;
 		}
@@ -180,9 +180,9 @@ public class CommentDaoImpl implements CommentDao {
 		}
 
 		if (star_or_diss == Comment.STAR) {
-			sql = "SELECT star FROM t_comment WHERE id = " + id;
+			sql = "SELECT star FROM blog_comment WHERE id = " + id;
 		} else if (star_or_diss == Comment.DISS) {
-			sql = "SELECT diss FROM t_comment WHERE id = " + id;
+			sql = "SELECT diss FROM blog_comment WHERE id = " + id;
 		}
 
 		try {

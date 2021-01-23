@@ -62,7 +62,7 @@ public class UserDaoImpl implements UserDao {
 
 		User user = null;
 
-		String sql = "select * from t_user where user_name=? and user_password=? ";
+		String sql = "select * from blog_user where user_name=? and user_password=? ";
 		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement(sql);
